@@ -19,7 +19,7 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 ENV POETRY_CACHE_DIR='/var/cache/pypoetry'
 ENV POETRY_HOME='/usr/local'
 
-COPY . .
+COPY --chown=nonroot:nonroot . .
 ARG INSTALL_CMD="pip install poetry && poetry install --no-ansi --no-root"
 RUN if [ ! -z "${INSTALL_CMD}" ]; then sh -c "$INSTALL_CMD";  fi
 RUN poetry run python manage.py tailwind install
