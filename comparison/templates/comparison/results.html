@@ -5,24 +5,26 @@
     <h1 class="text-3xl font-bold mb-8">Vergleichsergebnisse</h1>
     
     <div class="space-y-6">
-        {% for economic, score in results.items %}
+        {% for result in results %}
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex justify-between items-center mb-3">
-                <h2 class="text-xl font-semibold">{{ economic.name }}</h2>
-                <span class="text-blue-600 font-medium">{{ score }}%</span>
+                <h2 class="text-xl font-semibold">{{ result.economic.name }}</h2>
+                <span class="text-blue-600 font-medium">{{ result.percentage }}%</span>
             </div>
             
             <div class="w-full bg-gray-200 rounded-full h-2.5">
-                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ score }}%"></div>
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ result.percentage }}%"></div>
             </div>
+            
+            <p class="text-gray-600 mt-3">{{ result.economic.description }}</p>
         </div>
         {% endfor %}
     </div>
 
-    <div class="sticky bottom-0 bg-white py-4 mt-8 shadow-lg">
+    <div class="sticky bottom-0 bg-white p-4 mt-8 shadow-lg">
         <a href="{% url 'comparison:compare' %}" 
            class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors block text-center">
-            Erneut vergleichen
+            Weiter zum Vergleich
         </a>
     </div>
 </div>
