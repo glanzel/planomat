@@ -1,0 +1,53 @@
+{% extends layout %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="max-w-full mx-auto p-4 overflow-x-auto">
+    <!-- Header -->
+    <div class="grid gap-4 mb-4 grid-cols-{{ cols }}">
+        <div class="col-span-2 font-semibold sticky left-0 z-10 p-2">Fragen</div>
+        {% for economic in economics %}
+        <div class="font-semibold text-center p-2 whitespace-nowrap" style="grid-column: span 1 / span 1;">{{ economic.name }}</div>
+        {% endfor %}
+    </div>
+    
+    <!-- Divider -->
+    <div class="border-b-2 border-gray-300 w-full mb-4"></div>
+
+    <!-- Questions -->
+    <div class="grid gap-4 grid-cols-{{ cols }}">
+        {% for question in questions %}
+                <div class="col-span-2 bg-white rounded font-medium sticky left-0 z-10 p-2">{{ question.text }}</div>
+                {% for economic in economics %}
+                <div class="text-center p-2">
+                    <div>
+                        {% if answer_map and answer_map|get:question.id %}
+                            {% with answer=answer_map|get:question.id|get:economic.id %}
+                            <div class="p-1 bg-white rounded">
+                                {% if answer == 'agree' %}Ja
+                                {% elif answer == 'neutral' %}Egal
+                                {% elif answer == 'disagree' %}Nein
+                                {% endif %}
+                            </div>
+                            {% endwith %}
+                        {% else %}
+                            <div class="p-1 rounded border border-gray-200"></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .sticky {
+        position: static;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wirtschaftssysteme vergleichen{% endblock %}</title>
+    <script
+      src="https://unpkg.com/htmx.org@2.0.2"
+      integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/idiomorph@0.3.0/dist/idiomorph-ext.min.js"></script>
+
+    {% tailwind_css %}
+</head>
+<body class="bg-[url(/static/img/large-triangles.svg)] text-2xl">
+    <header class="text-white py-6 text-center">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold">Plan-O-Mat</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

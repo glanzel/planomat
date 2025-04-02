@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Fragen</h1>
+    
+    {% for question in questions %}
+    {% include 'comparison/question.html' %}
+    {% endfor %}
+
+    <div class="flex justify-between mt-8">
+        <button id="prev-question" 
+                class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+            Zurück
+        </button>
+        <button id="reset-answers"
+                class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600">
+            Antworten zurücksetzen
+        </button>
+        <button id="next-question" 
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+            Weiter
+        </button>
+    </div>
+
+</div>
+
+<script>
+let currentQuestionIndex = 0;
+const questions = document.querySelectorAll('[id^="question-"]');
+const prevButton = document.getElementById('prev-question');
+const nextButton = document.getElementById('next-question');
+const resetButton = document.getElementById('reset-answers');
+
+// Initialize question visibility
+function showQuestion(index) {
+    questions.forEach((question, i) => {
+        if (i === index) {
+            question.classList.remove('hidden')
+        } else {
+            question.classList.add('hidden');
+        }
+    });
+
+    // Update navigation buttons
+    prevButton.disabled = index === 0;
+    nextButton.disabled = index === questions.length - 1;
+}
+
+
+// Navigation
+prevButton.addEventListener('click', () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(currentQuestionIndex);
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
+    }
+});
+
+// Reset button
+resetButton.addEventListener('click', resetAnswers);
+
+// Load saved answers and show first question
+window.addEventListener('load', () => {
+    showQuestion(0);
+});
+</script>
+{% endblock %}
