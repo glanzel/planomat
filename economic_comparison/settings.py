@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-_^czq&6do$k*wtvtn3^m6aes*+o0@4e%ips(#(et&cc+1w2407
 DEBUG = True
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["planomat.ecord.de", "localhost", "127.0.0.1"])
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://fairmieten.ecord.de"])
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://planomat.ecord.de"])
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
