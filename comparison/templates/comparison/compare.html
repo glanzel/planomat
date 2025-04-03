@@ -2,12 +2,14 @@
 {% load custom_filters %}
 
 {% block content %}
+<div class="hidden grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5" ></div>
+
 <div class="max-w-full mx-auto p-4 overflow-x-auto">
     <!-- Header -->
     <div class="grid gap-4 mb-4 grid-cols-{{ cols }}">
-        <div class="col-span-2 font-semibold sticky left-0 z-10 p-2">Fragen</div>
+        <div class="col-span-2 font-semibold sticky left-0 z-10 p-2"> </div>
         {% for economic in economics %}
-        <div class="font-semibold text-center p-2 whitespace-nowrap" style="grid-column: span 1 / span 1;">{{ economic.name }}</div>
+        <div class="font-semibold text-center p-2" >{{ economic.name }}</div>
         {% endfor %}
     </div>
     

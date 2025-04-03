@@ -123,7 +123,7 @@ def save_poll(request, nr = 0):
                 'answer': user_answer
             })
         else:
-            return redirect('comparison:compare')
+            return redirect('comparison:results')
         
     except Exception as e:
         return JsonResponse({'status': 'error','message': str(e) }, status=500)
