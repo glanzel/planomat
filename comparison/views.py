@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from requests import session
 from .models import Question, Answer, Economic, UserAnswer
 
 
@@ -81,17 +82,23 @@ def results_view(request):
     
     print(results)
     
-    return render(request, 'comparison/results.html', {
+    return render(request, 'comparison/results.html', {'layout': layout(request),
         'results': results
     })
 
 
 
 def poll(request, nr = 0):
-    question = Question.objects.all()[nr]
-    print(question)
-    return render(request, 'comparison/question_.html', {'layout': layout(request), 'question': question, 'nr': nr, 'answer': None})
+    questions = Question.objects.all()
+    if(nr >= len(questions)): return redirect('comparison:results')
 
+    if 'comparison_uuid' not in request.session:
+        request.session['comparison_uuid'] = str(uuid.uuid4())
+    
+    question = questions[nr]
+    answer = UserAnswer.objects.filter(question=question, session_uuid=request.session['comparison_uuid']).first()
+
+    return render(request, 'comparison/question_.html', {'layout': layout(request), 'question': question, 'nr': nr, 'answer': answer})
 
 @require_http_methods(["POST"])
 def save_poll(request, nr = 0):
@@ -116,11 +123,13 @@ def save_poll(request, nr = 0):
         questions = Question.objects.all()
         if(nr < len(questions)-1):
             next_question = questions[nr+1]
+            next_answer = UserAnswer.objects.filter(question=next_question, session_uuid=request.session['comparison_uuid']).first()
+
             return render(request, 'comparison/question.html', {
                 'layout': layout(request),
                 'question': next_question,
                 'nr': nr+1,
-                'answer': user_answer
+                'answer': next_answer
             })
         else:
             return redirect('comparison:results')

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends layout %}
 
 {% block content %}
 <div class="max-w-3xl mx-auto">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="sticky bottom-0 bg-white p-4 mt-8 shadow-lg">
-        <a href="{% url 'comparison:compare' %}" 
+        <a href="{% url 'comparison:compare' %}" hx-get="{% url 'comparison:compare' %}" 
            class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors block text-center">
             Weiter zum Vergleich
         </a>

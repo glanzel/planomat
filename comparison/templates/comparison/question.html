@@ -1,12 +1,9 @@
-<div class="max-w-3xl mx-auto" id="question-{{ question.id }}">
+<div class="max-w-3xl mx-auto" id="the-question" hx-push-url="true">
     <h1 class="text-3xl font-bold mb-8">Frage {{ nr }}</h1>
     
-    <div  
-         class="bg-white rounded-lg p-6 my-4 transition-all duration-300 ">
+    <div class="bg-white rounded-lg p-6 my-4">
         <form class="the-question-form" 
-              hx-post="{% url 'comparison:save_poll' nr %}"
-              hx-target ="#question-{{ question.id }}"
-			  hx-swap="outerHTML" >
+              hx-post="{% url 'comparison:save_poll' nr %}">
             {% csrf_token %}
             <input type="hidden" name="question_id" value="{{ question.id }}">
             
@@ -16,37 +13,40 @@
                 <button type="submit" 
                         name="answer"
                         value="agree"
-                        class="flex items-center justify-center p-2 rounded border border-blue-200 hover:bg-blue-50 transition-colors">
-                    <span class="text-blue-600 font-medium">Stimme zu</span>
+                        class="flex items-center justify-center p-2 rounded border border-blue-200 {% if answer and answer.answer == 'agree' %}bg-blue-300{% endif %} hover:bg-blue-50 transition-colors">
+                    <span class="text-blue-600 font-medium">Ja</span>
                 </button>
                 
                 <button type="submit" 
                         name="answer"
                         value="neutral"
-                        class="flex items-center justify-center p-2 rounded border border-gray-200 hover:bg-gray-100 transition-colors">
+                        class="flex items-center justify-center p-2 rounded border border-gray-200 {% if answer and answer.answer == 'neutral' %}bg-gray-300{% endif %} hover:bg-gray-100 transition-colors">
                     <span class="text-gray-600">Neutral</span>
                 </button>
                 
                 <button type="submit" 
                         name="answer"
                         value="disagree"
-                        class="flex items-center justify-center p-2 rounded border border-red-200 hover:bg-red-50 transition-colors">
-                    <span class="text-red-600 font-medium">Stimme nicht zu</span>
+                        class="flex items-center justify-center p-2 rounded border border-red-200 {% if answer and answer.answer == 'disagree' %}bg-red-300{% endif %} hover:bg-red-50 transition-colors">
+                    <span class="text-red-600 font-medium">Nein</span>
                 </button>
             </div>
         </form>
     </div>
     <div class="flex justify-between mt-8">
+        {% if nr > 0 %}
         <button id="prev-question" 
                 class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled>
+                hx-get="{% url 'comparison:poll' nr|add:-1 %}"
+                >
             Zurück
         </button>
+        {% endif %}
         <button id="next-question" 
-                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+                hx-get="{% url 'comparison:poll' nr|add:1 %}">
             Weiter
         </button>
     </div>
-
 </div>
 

@@ -11,6 +11,7 @@ class Economic(models.Model):
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -36,7 +37,7 @@ class AbstractAnswer(models.Model):
 
 class Answer(AbstractAnswer):
     economic = models.ForeignKey(Economic, on_delete=models.CASCADE)
-
+    description = models.TextField(blank=True)
     class Meta:
         unique_together = ('question', 'economic')
 

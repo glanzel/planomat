@@ -11,8 +11,42 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/idiomorph@0.3.0/dist/idiomorph-ext.min.js"></script>
-
     {% tailwind_css %}
+
+    <style>
+       @keyframes fade-in {
+         from { opacity: 0; }
+       }
+    
+       @keyframes fade-out {
+         to { opacity: 0; }
+       }
+    
+       @keyframes slide-from-right {
+         from { transform: translateX(90px); }
+       }
+    
+       @keyframes slide-to-left {
+         to { transform: translateX(-90px); }
+       }
+    
+       /* define animations for the old and new content */
+       ::view-transition-old(slide-it) {
+         animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+         600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+       }
+       ::view-transition-new(slide-it) {
+         animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+         600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+       }
+    
+       /* tie the view transition to a given CSS class */
+       .slide-transition {
+           view-transition-name: slide-it;
+       }
+        
+</style>
+
 </head>
 <body class="bg-[url(/static/img/large-triangles.svg)] text-2xl">
     <header class="text-white py-6 text-center">
@@ -21,9 +55,9 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="slide-transition container mx-auto px-4 py-8" id="main-content" hx-swap = "innerHTML transition:true" hx-target="#main-content">
         {% block content %}
         {% endblock %}
-    </main>
+    </main>    
 </body>
 </html>

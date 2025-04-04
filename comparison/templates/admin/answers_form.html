@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% blocktrans %}Edit Answers for {{ economic.name }}{% endblocktrans %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Question" %}</th>
+          <th>{% trans "Answer" %}</th>
+          <th>{% trans "Description" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for question, form in questions %}
+          <tr>
+            <td>{{ question.text }}</td>
+            <td>{{ form.answer }}</td>
+            <td>{{ form.description }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <input type="submit" value="{% trans 'Save' %}">
+  </form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block after_field_sets %}
+  <div class="submit-row">
+    <a href="{{ answers_url }}" class="button">{% trans "Edit All Answers" %}</a>
+  </div>
+  {{ block.super }}
+{% endblock %}
