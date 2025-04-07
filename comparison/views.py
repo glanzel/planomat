@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from requests import session
 from .models import Question, Answer, Economic, UserAnswer
 
 
@@ -85,8 +84,6 @@ def results_view(request):
     return render(request, 'comparison/results.html', {'layout': layout(request),
         'results': results
     })
-
-
 
 def poll(request, nr = 0):
     questions = Question.objects.all()
