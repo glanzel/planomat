@@ -1,4 +1,5 @@
 {% extends layout %}
+{% load static %}
 {% load custom_filters %}
 
 {% block content %}
@@ -25,10 +26,10 @@
                     <div>
                         {% if answer_map and answer_map|get:question.id %}
                             {% with answer=answer_map|get:question.id|get:economic.id %}
-                            <div class="p-1 bg-white rounded">
-                                {% if answer == 'agree' %}Ja
-                                {% elif answer == 'neutral' %}Egal
-                                {% elif answer == 'disagree' %}Nein
+                            <div class="p-1 flex justify-center">
+                                {% if answer == 'agree' %}<img src="{% static 'icon/yes.svg' %}" class="w-12" alt="Ja">
+                                {% elif answer == 'neutral' %}<img src="{% static 'icon/neutral.svg' %}" class="w-12" alt="Ja">
+                                {% elif answer == 'disagree' %}<img src="{% static 'icon/no.svg' %}" class="w-12" alt="Ja">
                                 {% endif %}
                             </div>
                             {% endwith %}
