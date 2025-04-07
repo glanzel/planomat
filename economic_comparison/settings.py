@@ -28,11 +28,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, "data", ".env"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_^czq&6do$k*wtvtn3^m6aes*+o0@4e%ips(#(et&cc+1w2407'
+DEBUG = env("DEBUG")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Raises Django's ImproperlyConfigured
+# exception if SECRET_KEY not in os.environ
+SECRET_KEY = env("SECRET_KEY")
+
+
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["planomat.ecord.de", "localhost", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://planomat.ecord.de"])
